@@ -1,26 +1,55 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { OpenMetadataHoverProvider } from './providers/hover';
+import { OpenMetadataClient } from './api/client';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+    console.log('OpenMetadata extension is now active!');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "openmetadata-vscode" is now active!');
+    // Register hover provider for SQL, Python, YAML files
+    const hoverProvider = vscode.languages.registerHoverProvider(
+        [
+            { language: 'sql' },
+            { language: 'python' },
+            { language: 'yaml' }
+        ],
+        new OpenMetadataHoverProvider()
+    );
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('openmetadata-vscode.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from openmetadata-vscode!');
-	});
+    // Register search command
+    const searchCommand = vscode.commands.registerCommand(
+        'openmetadata-vscode.search',
+        async () => {
+            const query = await vscode.window.showInputBox({
+                prompt: 'Search OpenMetadata tables...',
+                placeHolder: 'e.g. customers, orders, products'
+            });
 
-	context.subscriptions.push(disposable);
+            if (!query) return;
+
+            const client = new OpenMetadataClient();
+            const results = await client.searchTables(query);
+
+            if (results.length === 0) {
+                vscode.window.showInformationMessage('No tables found for: ' + query);
+                return;
+            }
+
+            const items = results.map((r: any) => ({
+                label: r._source?.name || r._source?.fullyQualifiedName,
+                description: r._source?.description || 'No description'
+            }));
+
+            const picked = await vscode.window.showQuickPick(items, {
+                placeHolder: 'Select a table to view'
+            });
+
+            if (picked) {
+                vscode.window.showInformationMessage(`Selected: ${picked.label}`);
+            }
+        }
+    );
+
+    context.subscriptions.push(hoverProvider, searchCommand);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}

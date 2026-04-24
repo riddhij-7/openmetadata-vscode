@@ -9,15 +9,41 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+  "onLanguage:sql",
+  "onLanguage:python",
+  "onLanguage:yaml",
+  "onCommand:openmetadata-vscode.search"
+],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
-      {
-        "command": "openmetadata-vscode.helloWorld",
-        "title": "Hello World"
-      }
-    ]
+        {
+            "command": "openmetadata-vscode.search",
+            "title": "OpenMetadata: Search Tables"
+        }
+    ],
+    "languages": [
+  {
+    "id": "sql",
+    "extensions": [".sql"]
+  }
+],
+    "configuration": {
+        "title": "OpenMetadata",
+        "properties": {
+            "openmetadata.serverUrl": {
+                "type": "string",
+                "default": "https://sandbox.open-metadata.org",
+                "description": "OpenMetadata server URL"
+            },
+            "openmetadata.token": {
+                "type": "string",
+                "default": "",
+                "description": "OpenMetadata API token"
+            }
+        }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
