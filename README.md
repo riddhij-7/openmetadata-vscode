@@ -104,7 +104,7 @@ C --> D[Cache Lookup]
 D --> E[Fresh]
 D --> F[Stale + Refresh]
 D --> G[Miss → API Fetch]
-
+```
 
 ---
 
