@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
     const cache = new MetadataCache();
     const prefetcher = new Prefetcher(cache);
 
-    // Prefetch on cursor move — warms cache before user hovers
+    // Prefetch on cursor move 
     const selectionListener = vscode.window.onDidChangeTextEditorSelection(event => {
         const editor = event.textEditor;
         if (!SUPPORTED_LANGUAGES.includes(editor.document.languageId)) return;
