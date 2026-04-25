@@ -111,7 +111,7 @@ MetadataCache.get(word)
 OpenMetadataClient
 ├── /api/v1/tables/name/{fqn}
 ├── /api/v1/lineage/getLineage
-└── /api/v1/dataQuality/testCases
+└── /api/v1/dataQuality/testCases```
 
 ---
 
