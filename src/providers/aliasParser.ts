@@ -1,10 +1,3 @@
-// Parses SQL text and returns a map of alias -> table name/FQN
-// Handles:
-//   FROM orders o
-//   FROM orders AS o
-//   JOIN acme_nexus_raw_data.acme_raw.sales.products p
-//   JOIN acme_nexus_raw_data.acme_raw.sales.products AS p
-
 export function parseAliases(sql: string): Map<string, string> {
     const aliases = new Map<string, string>();
 
