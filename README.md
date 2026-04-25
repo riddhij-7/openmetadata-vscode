@@ -1,6 +1,6 @@
 # OpenMetadata for VS Code
 
-> Bring your data catalog directly into your editor — no tab switching, no context loss.
+> Bring your data catalog directly into your editor, no tab switching, no context loss.
 
 ## The Problem
 
@@ -83,6 +83,7 @@ FROM acme_nexus_redshift.enterprise_dw.public.executive_sales_summary.total_orde
 JOIN acme_nexus_redshift.enterprise_dw.public.executive_sales_summary.total_revenue p
 ON t.total_orders = p.total_revenue;
 ```
+You can download and use the sample test files in .sql, .yml, or .py from the repository.
 
 Hover over `acme_nexus_raw_data.acme_raw.sales.orders` — you will see
 the metadata tooltip appear with description, owner, tier, tags, 
@@ -93,17 +94,20 @@ Also try hovering over just `o` — it resolves the alias to the full table.
 ---
 
 ## Architecture
+
+```text
 Cursor moves over word
 ↓
 Prefetcher warms cache in background
 ↓
-User hovers → HoverProvider fires
+User hovers
+→ HoverProvider fires
 ↓
 MetadataCache.get(word)
-├── fresh  → return instantly 
-├── stale  → return instantly + background refresh 
-└── miss   → await API fetch → cache → return
-↓
+├── fresh → return instantly
+├── stale → return instantly + refresh
+└── miss → fetch API → cache → return
+
 OpenMetadataClient
 ├── /api/v1/tables/name/{fqn}
 ├── /api/v1/lineage/getLineage
@@ -135,7 +139,7 @@ instance by changing the server URL in VS Code settings.
 
 ---
 
-## Judging Criteria — How We Address Each
+
 
 | Criteria | What we built |
 |---|---|
@@ -148,4 +152,4 @@ instance by changing the server URL in VS Code settings.
 
 ---
 
-Built for the WeMakeDevs x OpenMetadata Hackathon 2025
+Built for the WeMakeDevs x OpenMetadata Hackathon 2026
