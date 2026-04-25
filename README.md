@@ -95,23 +95,16 @@ Also try hovering over just `o` — it resolves the alias to the full table.
 
 ## Architecture
 
-```text
-Cursor moves over word
-↓
-Prefetcher warms cache in background
-↓
-User hovers
-→ HoverProvider fires
-↓
-MetadataCache.get(word)
-├── fresh → return instantly
-├── stale → return instantly + refresh
-└── miss → fetch API → cache → return
 
-OpenMetadataClient
-├── /api/v1/tables/name/{fqn}
-├── /api/v1/lineage/getLineage
-└── /api/v1/dataQuality/testCases```
+```mermaid
+flowchart TD
+A[Hover word] --> B[Prefetch Cache]
+B --> C[HoverProvider]
+C --> D[Cache Lookup]
+D --> E[Fresh]
+D --> F[Stale + Refresh]
+D --> G[Miss → API Fetch]
+
 
 ---
 
