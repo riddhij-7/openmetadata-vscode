@@ -25,8 +25,7 @@ export class OpenMetadataClient {
             'https://sandbox.open-metadata.org';
 
         this.token =
-            config.get<string>('token') ||
-            '';
+            config.get<string>('token') || 'YOUR_SANDBOX_TOKEN_HERE';
         console.log(
         'Token being used:',
         this.token
@@ -52,7 +51,7 @@ export class OpenMetadataClient {
 
             const hasDots = tableName.includes('.');
 
-            // Only do direct FQN lookup if word has dots (e.g. db.schema.table)
+            
             if (hasDots) {
                 const directUrl = `${this.baseUrl}/api/v1/tables/name/${encodeURIComponent(tableName)}?fields=tags,columns,owners`;
                 const directRes = await this.fetchWithTimeout(directUrl, headers);
@@ -61,7 +60,7 @@ export class OpenMetadataClient {
                 }
             }
 
-            // Plain word (e.g. "users") — go straight to search
+           
             const searchUrl = `${this.baseUrl}/api/v1/search/query?q=${encodeURIComponent(tableName)}&index=table_search_index&limit=5`;
             const searchRes = await this.fetchWithTimeout(searchUrl, headers);
             if (!searchRes.ok) { return null; }
@@ -77,7 +76,6 @@ export class OpenMetadataClient {
             const fqn = match._source?.fullyQualifiedName;
             if (!fqn) { return null; }
 
-            // search results lack full column data — fetch by FQN
             const fqnUrl = `${this.baseUrl}/api/v1/tables/name/${encodeURIComponent(fqn)}?fields=tags,columns,owners`;
             const fqnRes = await this.fetchWithTimeout(fqnUrl, headers);
             if (!fqnRes.ok) { return null; }
@@ -154,7 +152,6 @@ export class OpenMetadataClient {
             const headers: Record<string, string> = { 'Content-Type': 'application/json' };
             if (this.token.trim()) { headers['Authorization'] = `Bearer ${this.token}`; }
 
-            // depth=1 only — depth=2 is much slower
             const url = `${this.baseUrl}/api/v1/lineage/getLineage?fqn=${encodeURIComponent(fqn)}&type=table&upstreamDepth=1&downstreamDepth=1`;
             console.log('Fetching lineage:', url);
 

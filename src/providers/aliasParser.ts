@@ -9,12 +9,12 @@ export function parseAliases(sql: string): Map<string, string> {
         const table = match[1];
         const alias = match[2].toUpperCase();
 
-        // Skip if alias is a SQL keyword (e.g. FROM orders ON ...)
+     
         if (/^(ON|WHERE|SET|AND|OR|JOIN|LEFT|RIGHT|INNER|OUTER|FULL|CROSS|AS|SELECT|GROUP|ORDER|HAVING|LIMIT|UNION)$/i.test(alias)) {
             continue;
         }
 
-        aliases.set(match[2], table); // preserve original case for alias key
+        aliases.set(match[2], table); 
     }
 
     return aliases;

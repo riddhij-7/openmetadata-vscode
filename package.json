@@ -1,8 +1,14 @@
 {
   "name": "openmetadata-vscode",
   "displayName": "openmetadata-vscode",
-  "description": "",
+  "description": "Hover over table names to see metadata, lineage and data quality from OpenMetadata",
   "version": "0.0.1",
+  "publisher": "NextDev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/riddhij-7/openmetadata-vscode"
+  },
   "engines": {
     "vscode": "^1.116.0"
   },

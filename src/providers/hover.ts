@@ -30,11 +30,11 @@ export class OpenMetadataHoverProvider implements vscode.HoverProvider {
         const resolved = this.resolveToken(raw, aliases);
         const candidates = this.extractCandidates(resolved);
 
-        // Filter out pure SQL keywords and short tokens
+        
         const viable = candidates.filter(w => w.length >= 3 && !SQL_KEYWORDS.test(w));
         if (viable.length === 0) return null;
 
-        // Check cache / dead state for all candidates first (instant)
+        // Check cache / dead state for all candidates first 
         for (const word of viable) {
             const cached = this.cache.getTable(word);
             if (cached) return this.buildHover(cached.data, wordRange);
@@ -43,7 +43,7 @@ export class OpenMetadataHoverProvider implements vscode.HoverProvider {
         // Check if all candidates are already dead (not_found / failed)
         const deadStates = viable.map(w => this.prefetcher.getDeadState(w)).filter(Boolean);
         if (deadStates.length === viable.length) {
-            // Every candidate failed — show appropriate message for the most relevant word
+            // Every candidate failed 
             const state = this.prefetcher.getDeadState(viable[viable.length - 1]);
             return this.buildErrorHover(resolved.split('.').pop() ?? raw, wordRange, state!);
         }
@@ -80,7 +80,7 @@ export class OpenMetadataHoverProvider implements vscode.HoverProvider {
             if (fetched) return this.buildHover(fetched.data, wordRange);
         }
 
-        // Still nothing — show error for the shortest (most likely table name) candidate
+        // Still nothing — show error 
         const tableName = viable[viable.length - 1];
         const state = this.prefetcher.getDeadState(tableName);
         if (state) {

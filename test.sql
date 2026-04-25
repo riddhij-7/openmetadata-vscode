@@ -1,8 +1,8 @@
-SELECT * FROM acme_nexus_raw_data.acme_raw.sales.orders;
+SELECT * FROM acme_nexus_redshift.enterprise_dw.public.executive_sales_summary
 
 SELECT 
-    o.order_id,
-    p.product_id
-FROM acme_nexus_raw_data.acme_raw.sales.orders o
-JOIN acme_nexus_raw_data.acme_raw.sales.products p
-ON o.product_id = p.product_id;
+    t.total_orders,
+    p.total_revenue
+FROM acme_nexus_redshift.enterprise_dw.public.executive_sales_summary.total_orders t
+JOIN acme_nexus_redshift.enterprise_dw.public.executive_sales_summary.total_revenue p
+ON t.total_orders = p.total_revenue;

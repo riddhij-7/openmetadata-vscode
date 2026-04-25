@@ -1,71 +1,31 @@
-# openmetadata-vscode README
+# OpenMetadata for VS Code
 
-This is the README for your extension "openmetadata-vscode". After writing up a brief description, we recommend including the following sections.
+Bring your data catalog directly into your editor. Hover over any table name in SQL, Python, or YAML files to instantly see metadata from OpenMetadata.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- 📊 Hover tooltips — description, owner, tier, tags, columns
+- 🔗 Lineage — upstream and downstream tables  
+- ✅ Data Quality — test results inline
+- 🔍 Search — Cmd+Shift+P → OpenMetadata: Search Tables
+- ⚡ Smart caching — instant after first load
 
-For example if there is an image subfolder under your extension project workspace:
+## Quick Start
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Install this extension
+2. Go to `sandbox.open-metadata.org` and sign up
+3. Profile → Settings → Access Token → Copy
+4. VS Code Settings → search `openmetadata` → paste your token
+5. Open any `.sql` file and hover over a table name
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Example
 
-## Requirements
+```sql
+SELECT * FROM acme_nexus_raw_data.acme_raw.sales.orders;
+--             ↑ hover here
+```
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+## Supported Files
+- SQL (`.sql`)
+- Python (`.py`)
+- dbt YAML (`.yml`, `.yaml`)
