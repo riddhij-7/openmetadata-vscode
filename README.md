@@ -66,6 +66,7 @@ In VS Code:
 ### Step 3 — Configure the extension
 
 VS Code Settings (`Ctrl+,`) → search `openmetadata` → set:
+![alt text](image.png)
 - **Server URL:** `https://sandbox.open-metadata.org`
 - **Token:** paste your token here
 
